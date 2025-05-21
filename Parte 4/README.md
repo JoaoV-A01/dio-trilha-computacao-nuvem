@@ -1,85 +1,117 @@
 # Componentes de Arquitetura do Azure
 
-## 🌍 Regiões
-
-O Azure possui **vários datacenters distribuídos globalmente**, permitindo a utilização de recursos em diversas regiões. Isso reduz a **latência** e melhora o tempo de resposta dos serviços.
-
-- As **regiões** geralmente são compostas por **um ou mais datacenters próximos**, formando **zonas de disponibilidade**, com pelo menos um datacenter reserva.
-- As regiões oferecem **flexibilidade, escala e conformidade**, como exigências de **residência de dados** (ex: LGPD no Brasil impede que certas informações saiam do país).
-
-### 🔄 Pares de Regiões
-
-- Cada região principal tem uma **região secundária emparelhada** para **recuperação de desastres**.
-- Pares são separados por no mínimo **300 milhas** (~480 km).
-- Alguns serviços realizam **replicação automática** entre regiões.
-- A recuperação das regiões emparelhadas é **priorizada em caso de interrupções**.
-
-### 🏛️ Regiões Soberanas
-
-- **Azure Government (EUA):** Isolado fisicamente, voltado para agências federais e estaduais.
-- **Azure China:** Operado pela 21Vianet, atende à regulamentação local. A Microsoft é o primeiro provedor estrangeiro de nuvem pública na China.
+A arquitetura do Azure é composta por vários elementos que permitem planejar, organizar e gerenciar recursos em nuvem com eficiência, escalabilidade e segurança.
 
 ---
 
-## 🧩 Recursos do Azure
+## 🌍 Regiões do Azure
 
-São os **componentes fundamentais** utilizados para construir soluções em nuvem:
+As **regiões** são áreas geográficas que contêm **um ou mais datacenters interconectados**. Elas permitem implantar recursos próximos aos usuários finais, o que reduz a latência e melhora a experiência.
 
-- **Máquinas Virtuais (VMs)**
-- **Contas de Armazenamento**
-- **Redes Virtuais**
-- **Bancos de Dados SQL**
-- **Funções (Functions)**
-- **Serviços de Aplicativos (App Services)**
+- **Zonas de disponibilidade**: conjunto de datacenters independentes dentro de uma região, garantindo alta disponibilidade e redundância.
+- **Residência dos dados**: conformidade com leis como a **LGPD**, que exige que certos dados não saiam do país.
+
+🔗 [Regiões do Azure – Documentação](https://learn.microsoft.com/pt-br/azure/availability-zones/az-overview)
 
 ---
 
-## 📦 Grupos de Recursos
+## 🌐 Pares de Regiões
 
-Forma de **organizar e gerenciar recursos relacionados** de um projeto, como um contêiner lógico.
+- Cada região primária tem uma **região secundária emparelhada** separada por no mínimo 300 milhas (~480 km).
+- Oferece **recuperação de desastres** e **replicação automática** para determinados serviços.
+- Em caso de interrupções, a região emparelhada tem **prioridade de recuperação**.
 
-- Exemplo: Grupo para **Web + Banco**, Grupo de **VMs**, Grupo de **Armazenamento**.
-- **Recursos podem ser movidos** entre diferentes grupos.
-- **Aplicativos podem usar recursos de múltiplos grupos**.
+🔗 [Pares de regiões do Azure](https://learn.microsoft.com/pt-br/azure/best-practices-availability-paired-regions)
+
+---
+
+## 🏛️ Regiões Soberanas
+
+Algumas regiões são **isoladas geograficamente e operacionalmente** para atender a exigências específicas:
+
+- **Azure Government (EUA)**: uso exclusivo por órgãos governamentais dos EUA. Infraestrutura separada e altamente segura.
+- **Azure China**: operada pela 21Vianet, em conformidade com regulamentos locais.
+  
+🔗 [Azure Government](https://learn.microsoft.com/pt-br/azure/azure-government/documentation-government-welcome)  
+🔗 [Azure China](https://learn.microsoft.com/en-us/azure/china/overview)
+
+---
+
+## ⚙️ Recursos do Azure
+
+São os **blocos de construção** usados para criar soluções na nuvem:
+
+- Máquinas Virtuais (VMs)
+- Contas de Armazenamento
+- Redes Virtuais
+- Bancos de Dados SQL
+- Azure Functions
+- Azure App Services
+
+🔗 [Tipos de recursos no Azure](https://learn.microsoft.com/pt-br/azure/azure-resource-manager/management/azure-services-resource-manager)
+
+---
+
+## 🧱 Grupos de Recursos
+
+- Funcionam como **containers lógicos** para agrupar e gerenciar recursos relacionados de um projeto.
+- Exemplo: um grupo para recursos de front-end, outro para banco de dados.
+- Recursos podem:
+  - Ser movidos entre grupos.
+  - Pertencer a grupos diferentes dentro da mesma aplicação.
+
+🔗 [Gerenciar grupos de recursos](https://learn.microsoft.com/pt-br/azure/azure-resource-manager/management/manage-resource-groups-portal)
 
 ---
 
 ## 💳 Assinaturas do Azure
 
-Cada **assinatura** está ligada a uma conta de cobrança. É possível separar projetos em diferentes assinaturas, como:
+- Cada assinatura representa uma **unidade de cobrança** e **controle de acesso**.
+- Um projeto pode ter diferentes assinaturas para ambientes distintos, como:
+  - Desenvolvimento
+  - Teste
+  - Produção
 
-- Desenvolvimento
-- Testes
-- Produção
+### Benefícios:
+- **Limite de cobrança**: separa relatórios e faturas por assinatura.
+- **Controle de acesso**: define permissões por assinatura.
 
-### Vantagens:
+---
 
-- **Limite de cobrança:** Relatórios e faturas separados por assinatura.
-- **Limite de controle de acesso:** Gerenciamento de quem pode provisionar e acessar recursos.
-- **Grupos de gerenciamento:** Agrupam e aplicam políticas a múltiplas assinaturas.
+## 🗂️ Grupos de Gerenciamento
+
+- Usados para **organizar e aplicar políticas** sobre várias assinaturas.
+- Facilitam o gerenciamento de múltiplos projetos e equipes em uma empresa.
+
+🔗 [Gerenciar vários assinaturas com grupos de gerenciamento](https://learn.microsoft.com/pt-br/azure/governance/management-groups/overview)
 
 ---
 
 ## 🧪 Lab: Construindo Arquiteturas no Azure
 
-O Azure oferece um [site interativo da infraestrutura global](https://infrastructuremap.microsoft.com/), com:
+💡 A Microsoft oferece um site interativo com uma **visualização imersiva da infraestrutura global** do Azure, incluindo:
 
-- Visualização das regiões e pares de regiões
-- Detalhes sobre replicação de dados
-- Simulação de datacenters (salas, equipamentos)
-- Chatbot para dúvidas
+- Mapa de regiões e zonas.
+- Visualização dos datacenters.
+- Chatbot com informações sobre cada área.
 
-### ✅ Criando Grupos de Recursos
+🔗 [Explore | Azure Global Infrastructure Experience](https://infrastructuremap.microsoft.com)
 
-1. **Definir assinatura**, nome e região.
-2. (Opcional) **Aplicar marcações** com chave-valor para organizar os recursos logicamente.
-3. **Revisar e criar**.
+### Criando Grupos de Recursos
 
-Após a criação, é possível:
+1. Selecione a **assinatura**.
+2. Defina o **nome do grupo** e a **região**.
+3. (Opcional) Aplique **marcas (tags)** com chave-valor para organização lógica (ex: `ambiente=produção`).
+4. Faça a revisão e conclua a criação.
 
-- Acessar logs de atividade
-- Gerenciar acesso via **IAM**
-- Visualizar implantações e configurações de segurança
-- Criar recursos como **redes virtuais** e incluir dentro de um grupo especifico
+🔗 [Criar e gerenciar grupos de recursos – Portal Azure](https://learn.microsoft.com/pt-br/azure/azure-resource-manager/management/manage-resource-groups-portal)
+
+### Ferramentas Disponíveis em Grupos de Recursos
+
+- **IAM (Controle de Acesso)**
+- **Logs de Atividade**
+- **Implantações**
+- **Segurança**
+- **Criação de novos recursos (como redes virtuais, bancos de dados, etc.)**
 
 ---
